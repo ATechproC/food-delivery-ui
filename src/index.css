@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer {
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: #000000;
+        color: white;
+        height: 100vh;
+        width: 100%;
+    }
+}
+
+@layer utilities {
+    .flex-center {
+        @apply flex items-center justify-center;
+    }
+
+    .flex-items {
+        @apply flex items-center;
+    }
+
+    .flex-between {
+        @apply flex items-center justify-between;
+    }
+}
+
+@layer components {
+    .button-style {
+        @apply bg-white font-bold text-[16px] px-3 py-1 text-[#e91e63] rounded-md;
+    }
+
+    .input-style {
+        @apply w-full text-[#fff] px-4 py-2 bg-[#57595B] outline-none
+    }
+}
+
+input::placeholder {
+    color: #fff;
+    font-size: 15px;
+}
+
+.meets-container {
+    animation: meets 6s linear infinite;
+}
+
+@keyframes meets {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translate(-150%);
+    }
+}
