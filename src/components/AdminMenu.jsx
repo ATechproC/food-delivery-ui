@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { MdCategory, MdDashboard, MdFavorite, MdMenu } from "react-icons/md";
 import { RiListUnordered } from "react-icons/ri";
 import { IoIosNotifications } from "react-icons/io";
 import { MdEvent } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import { useNavigate } from 'react-router';
+import { AppContext } from '../providers/AppProvider';
 
 const AdminMenu = () => {
 
     const navigate = useNavigate();
+
+    const { setJwt } = useContext(AppContext);
+
+    const handleLogout = () => {
+        localStorage.removeItem("jwt");
+        setJwt("");
+        navigate("/");
+    }
 
     return <div className='h-[100vh] min-w-[250px] bg-gray-900 pt-16 flex flex-col gap-12'>
         <div className='flex-between w-[60%] mx-auto cursor-pointer'>
@@ -46,7 +55,9 @@ const AdminMenu = () => {
             <IoIosNotifications className='text-[20px]' />
             <p className='text-[15px] font-semibold'>Details</p>
         </div>
-        <div className='flex-between w-[60%] mx-auto cursor-pointer'>
+        <div 
+        onClick={handleLogout}
+        className='flex-between w-[60%] mx-auto cursor-pointer'>
             <FiLogOut className='text-[20px]' />
             <p className='text-[15px] font-semibold'>Logout</p>
         </div>

@@ -63,3 +63,11 @@ input::placeholder {
         transform: translate(-150%);
     }
 }
+
+.active {
+    display: none;
+}
+
+.show {
+    display: flex;
+}

@@ -28,6 +28,8 @@ import AdminOrders from './pages/AdminOrders';
 import AddIngredientCategoryProvider from './providers/AddIngredientCategoryProvider';
 import AddIngredientsProvider from './providers/AddIngredientsProvider';
 import FoodProvider from './providers/FoodProvider';
+import IngredientsInputsProvider from './providers/IngredientsInputsProvider';
+import UpdateStatusProvider from './providers/UpdateStatusProvider';
 
 const App = () => {
 
@@ -37,7 +39,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/home' element={<Home />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/restaurant/:city/:id" element={<Restaurant />} />
+        <Route path="/restaurant/:city/:resId" element={<Restaurant />} />
         <Route path="/my-profile" element={<Profile />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/address" element={<Address />} />
@@ -65,8 +67,12 @@ const App = () => {
               <AddIngredientCategoryProvider>
                 <AddIngredientsProvider>
                   <FoodProvider>
-                    <RouterProvider router={router} />
-                    <ToastContainer />
+                    <IngredientsInputsProvider>
+                      <UpdateStatusProvider>
+                        <RouterProvider router={router} />
+                        <ToastContainer />
+                      </UpdateStatusProvider>
+                    </IngredientsInputsProvider>
                   </FoodProvider>
                 </AddIngredientsProvider>
               </AddIngredientCategoryProvider>

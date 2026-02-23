@@ -40,14 +40,14 @@ const CreateOwnerRestaurant = () => {
             "https://example.com/images/spicegarden2.jpg"
         ],
         "registrationDate": "2026-02-12T14:00:00",
-        "open" : false
+        "open": false
     });
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         try {
 
-            if (!image) alert("Image not selected");
+            if (!image) toast.warn("Image not selected");
 
             const { data } = await axios.post(backendUrl + "/admin/restaurant/create-restaurant", {
                 ...inputsValue,
@@ -64,7 +64,8 @@ const CreateOwnerRestaurant = () => {
             console.log(data)
 
         } catch (error) {
-            console.log(error);
+            toast.error(error.response?.data?.message || error.message);
+            console.log(error.response?.data?.message || error.message);
         }
     }
 

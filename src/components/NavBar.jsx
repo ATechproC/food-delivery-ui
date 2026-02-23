@@ -28,7 +28,8 @@ const NavBar = () => {
                         onClick={() => navigate("/search")}
                         className='cursor-pointer text-[20px]' />
                     <div className='relative '>
-                        <FaCartShopping className='cursor-pointer mx-5 text-[20px]' />
+                        <FaCartShopping onClick={() => navigate("/cart")}
+                            className='cursor-pointer mx-5 text-[20px]' />
                         {
                             addToCart == 0 ? <></>
                                 : <div className='absolute -top-1 right-4 w-[12px] h-[12px] rounded-full bg-black text-[10px] flex-center'> {addToCart} </div>

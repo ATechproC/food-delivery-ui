@@ -12,7 +12,7 @@ import FoodMenuItems from '../components/FoodMenuItems';
 
 const FoodMenu = () => {
 
-    const [isResCreated, setIsResCreated] = useState(!false);
+    const [isResCreated, setIsResCreated] = useState(false);
 
     const [image, setImage] = useState("");
 
@@ -46,7 +46,6 @@ const FoodMenu = () => {
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-        console.log("hi")
 
         if(!image) toast.warn("Image not selected");
         try {
@@ -58,27 +57,17 @@ const FoodMenu = () => {
                 }
             })
             await fetchFoodItems();
-            setIsResCreated(true);
+            setIsResCreated(!isResCreated);
         } catch (error) {
             console.log(error.response?.data?.message || error.message);
         }
     }
 
-    //  "name": "Margherita Pizz1a1",
-    // "description": "Classic Italian pizza with fresh mozzarella, tomato sauce, and basil.",
-    // "price": 89.90,
-    // "images": [
-    //     "https://example.com/images/margherita1.jpg",
-    //     "https://example.com/images/margherita2.jpg"
-    // ],
-    // "isVegetarian": true,
-    // "isSeasonal": false
-
     const [clickedId, setClickedId] = useState(1);
 
     const [selectedIngredients, setSelectedIngredients] = useState([]);
 
-    const addToIngredientsHandler = (id) => {
+    const addToIngredientsHandler = (id, index) => {
         const newArray = [...selectedIngredients];
         let isExists = false;
         let existsId;
@@ -91,12 +80,7 @@ const FoodMenu = () => {
         }
 
         if (!isExists) {
-            for (let i = 0; i < ingredients.length; i++) {
-                if (ingredients[i].id == id) {
-                    newArray[newArray.length] = ingredients[i];
-                    break;
-                }
-            }
+                    newArray[newArray.length] = ingredients[index];
         } else {
             for (let i = existsId; i < newArray.length - 1; i++) {
                 newArray[i] = newArray[i + 1];
@@ -152,9 +136,9 @@ const FoodMenu = () => {
                 <div className='flex justify-evenly items-center gap-4'>
                     <div className='flex flex-col gap-1'>
                         {
-                            ingredients.map(({ id, name }) => {
+                            ingredients.map(({ id, name }, index) => {
                                 return <div key={id} className='flex-items gap-1'>
-                                    <input onChange={() => addToIngredientsHandler(id)}
+                                    <input onChange={() => addToIngredientsHandler(id, index)}
                                         type='checkbox' id={name} />
                                     <label htmlFor={name} > {name} </label>
                                 </div>

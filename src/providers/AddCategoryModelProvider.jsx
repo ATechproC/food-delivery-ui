@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { createContext, useContext, useState } from 'react';
 import { AppContext } from './AppProvider';
+import { toast } from 'react-toastify';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AddCategoryModelContext = createContext({});
@@ -23,6 +24,7 @@ const AddCategoryModelProvider = ({ children }) => {
             setFoodCategories(data);
             console.log(data);
         } catch (error) {
+            toast.error(error.response?.data?.message || error.message);
             console.log(error.response?.data?.message || error.message);
         }
     }

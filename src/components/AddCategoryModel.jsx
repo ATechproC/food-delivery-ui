@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { AddCategoryModelContext } from '../providers/AddCategoryModelProvider';
 import { AppContext } from '../providers/AppProvider';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const AddCategoryModel = () => {
 
@@ -14,9 +15,9 @@ const AddCategoryModel = () => {
     const addCategoryHandler = async () => {
         try {
 
-            await axios.post(backendUrl + "/categories/create", {name}, {
-                headers : {
-                    Authorization : `Bearer ${jwt}`
+            await axios.post(backendUrl + "/categories/create", { name }, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`
                 }
             })
 
@@ -27,6 +28,7 @@ const AddCategoryModel = () => {
             setName("");
 
         } catch (error) {
+            toast.error(error.response?.data?.message || error.message);
             console.log(error.response?.data?.message || error.message);
         }
     }

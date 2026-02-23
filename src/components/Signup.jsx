@@ -4,6 +4,7 @@ import { useSignProvider } from '../providers/SignupProvider';
 import axios from "axios"
 import { AppContext } from '../providers/AppProvider';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 // import { toast } from 'react-toastify'
 
 const Signup = () => {
@@ -44,8 +45,8 @@ const Signup = () => {
                 setIsOpen(!isOpen);
                 // toast.success(message);
             } catch (err) {
-                // toast.error(err);
-                console.log(err);
+                toast.error(err.response?.data?.message || err.message);
+                console.log(err.response?.data?.message || err.message);
             }
         } else {
             try {
@@ -64,8 +65,8 @@ const Signup = () => {
                 setIsOpen(!isOpen);
                 // toast.success(message);
             } catch (err) {
-                // toast.error(err);
-                console.log(err);
+                toast.error(err.response?.data?.message || err.message);
+                console.log(err.response?.data?.message || err.message);
             }
         }
     }

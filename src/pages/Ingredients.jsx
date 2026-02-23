@@ -5,6 +5,9 @@ import { FaEdit } from 'react-icons/fa'
 import AdminMenu from '../components/AdminMenu'
 import { AddIngredientCategoryContext } from '../providers/AddIngredientCategoryProvider'
 import { AddIngredientsContext } from '../providers/AddIngredientsProvider'
+import { toast } from 'react-toastify'
+import axios from 'axios'
+import { AppContext } from '../providers/AppProvider'
 
 const Ingredients = () => {
 
@@ -17,6 +20,8 @@ const Ingredients = () => {
         fetchIngrdients, ingredients
     } = useContext(AddIngredientsContext);
 
+    const { backendUrl, jwt } = useContext(AppContext);
+
     useEffect(() => {
         fetchIngredientCategoies();
     }, []);
@@ -24,6 +29,25 @@ const Ingredients = () => {
     useEffect(() => {
         fetchIngrdients();
     }, []);
+
+    // handle ingredient item availability :
+
+    const handleAvailability = async (id, ingCatId) => {
+        try {
+
+            await axios.put(backendUrl + `/ingredient-items/update-stock/${id}?categoryId=${ingCatId}`, {}, {
+                headers : {
+                    Authorization : `Bearer ${jwt}`
+                }
+            })
+
+            await fetchIngrdients();
+
+        } catch (error) {
+            console.log(error.response?.data?.message || error.message);
+            toast.error(error.response?.data?.message || error.message);
+        }
+    }
 
     return <div className='flex gap-10'>
         <AdminMenu />
@@ -50,8 +74,13 @@ const Ingredients = () => {
                                     return <div key={id} className='flex-between border-[2px] p-3 border-t-0'>
                                         <p className='font-bold text-[20px] w-full '>id</p>
                                         <p className='font-bold text-[20px] w-full text-center'> {name} </p>
-                                        <p className='font-bold text-[20px] w-full text-center'> {ingredientCategory} </p>
-                                        <p className='font-bold text-[20px] w-full text-center'> {isInStock ? "In stock" : "Out of stock"} </p>
+                                        <p className='font-bold text-[20px] w-full text-center'> {ingredientCategory.name} </p>
+                                        <button
+                                            onClick={() => handleAvailability(id, ingredientCategory.id)}
+                                            style={{ backgroundColor: isInStock ? "green" : "red" }}
+                                            className='font-bold w-full text-center py-1 rounded-md'>
+                                            {isInStock ? "IN STOCK" : "OUT OF STOCK"}
+                                        </button>
                                     </div>
                                 })
                             }
